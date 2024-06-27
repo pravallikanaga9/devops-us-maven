@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('git clone') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '2210a348-e55e-4c8d-96e1-95b0cd7c07fd', url: 'git@github.com:swatinagare4/MavenProjectGitUse.git']])
+            }
+            
+            }
+        
+        stage('maven build') {
+            steps {
+                sh 'mvn clean package'
+    
+    }
+}
+        stage('archive artifact') {
+            steps {
+                archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+        }
+        }
+}
+}
+        
